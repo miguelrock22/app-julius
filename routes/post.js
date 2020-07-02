@@ -1,9 +1,12 @@
 const express = require('express');
 const postController = require('../controllers/post');
+var formidable = require('formidable');
 const app = express();
+const s3 = require('../config/aws');
 
 const { verifyToken } = require('../middlewares/auth');
 const user = require('../models/user');
+const { response } = require('./user');
 
 //Get all posts
 app.get('/api/post', verifyToken, (req, res) => {
@@ -30,12 +33,23 @@ app.get('/api/post', verifyToken, (req, res) => {
 
 //insert a post
 app.post('/api/post', verifyToken, (req, res) => {
+    var form = new formidable.IncomingForm();
     let body = req.body;
-    body.user = req.user._id;
-    postController.insert(body, (err, postDb) => {
-        if (err)
-            return res.status(400).json({ ok: false, err });
-        res.json({ ok: true, msg: 'Post agregado correctamente' });
+    form.parse(req, function(err, fields, files) {
+        s3.uploadFile(files.image,(s3Err, data) => {
+            if (s3Err) throw s3Err
+            body.title= fields.title;
+            body.content= fields.content;
+            body.date= fields.date;
+            body.image = data.Location;
+            body.user = req.user._id;
+            postController.insert(body, (err, postDb) => {
+                if (err)
+                    return res.status(400).json({ ok: false, err });
+                res.json({ ok: true, msg: 'Post agregado correctamente' });
+            });
+        });
+
     });
 });
 

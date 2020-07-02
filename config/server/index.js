@@ -12,6 +12,8 @@ app.use(cors);
 //Routes
 app.use(require('../../routes/index'));
 
-app.listen(process.env.APP_PORT, () => {
-    console.log(`Listening ${process.env.APP_PORT}`);
+const port = process.env.PORT || process.env.APP_PORT;
+
+app.listen(port, () => {
+    console.log(`Listening ${port}`);
 });

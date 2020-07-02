@@ -4,7 +4,7 @@
     "description": "Prueba ténica para Julius2Grow",
     "main": "app.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "start": "node config/server/index.js"
     },
     "author": "Miguel Montoya",
     "license": "ISC",
@@ -14,9 +14,11 @@
         "url": "https://github.com/miguelrock22/app-julius.git"
     },
     "dependencies": {
+        "aws-sdk": "^2.709.0",
         "bcrypt": "^5.0.0",
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
+        "formidable": "^1.2.2",
         "jsonwebtoken": "^8.5.1",
         "mongoose": "^5.9.20",
         "mongoose-unique-validator": "^2.0.3",
