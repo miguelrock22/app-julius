@@ -4,7 +4,7 @@
     "description": "Prueba ténica para Julius2Grow",
     "main": "app.js",
     "scripts": {
-        "start": "node config/server/index.js"
+        "start": "node app"
     },
     "author": "Miguel Montoya",
     "license": "ISC",
